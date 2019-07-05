@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font android:font="@font/noirprobold"/>
+    <font android:font="@font/noirprobolditalic"/>
+    <font android:font="@font/noirproheavy"/>
+    <font android:font="@font/noirproheavyitalic"/>
+    <font android:font="@font/noirproitalic"/>
+    <font android:font="@font/noirprolight"/>
+    <font android:font="@font/noirprolightitalic"/>
+    <font android:font="@font/noirpromedium"/>
+    <font android:font="@font/noirpromediumitalic"/>
+    <font android:font="@font/noirproregular"/>
+    <font android:font="@font/noirprosemibold"/>
+    <font android:font="@font/noirprosemibolditalic"/>
+
+</font-family>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Twitter</string>
+    <string name="msg_token_fmt">token</string>
+    <string name="title_activity_feed">FeedActivity</string>
+</resources>
