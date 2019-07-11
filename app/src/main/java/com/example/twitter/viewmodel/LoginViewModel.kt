@@ -39,7 +39,7 @@ class LoginViewModel(
             call?.run {
                 enqueue(object : Callback<User> {
                     override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.e("faild ", "${ldUsename.value}")
+                        Log.e("failed ", "${ldUsename.value}")
                         onClickLogin()
                     }
 
@@ -47,7 +47,6 @@ class LoginViewModel(
                         Log.e("success", "done")
                         val user: User? = response.body()
                         if (user?.status == true) {
-                            Log.e("access_token_main", response.body()?.data?.access_token)
                             val intent = Intent(mContext, FeedActivity::class.java)
                             intent.putExtra("access_token", response.body()?.data?.access_token)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

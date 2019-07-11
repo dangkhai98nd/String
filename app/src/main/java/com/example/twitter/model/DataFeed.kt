@@ -18,6 +18,6 @@ class DataFeed (
     var updated_at : String? = null,
     var distance : Float? = null,
     var user :DataUser? = null,
-    var isLike : Boolean? = null,
+    var isLiked : Boolean? = null,
     var tags : List<Any>? = null       // ????
 )

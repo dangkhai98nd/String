@@ -1,48 +1,79 @@
 package com.example.twitter
 
-import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.twitter.adapter.FeedAdapter
 import com.example.twitter.api.Client
 import com.example.twitter.api.Service
 import com.example.twitter.model.DataFeed
 import com.example.twitter.model.Feed
-import com.example.twitter.model.User
-
-import kotlinx.android.synthetic.main.activity_feed.*
-import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import com.example.twitter.viewmodel.FeedViewModel
+import com.example.twitter.viewmodel.FeedViewModelContract
+import com.google.android.libraries.places.api.Places
+import kotlinx.android.synthetic.main.content_feed.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FeedActivity : AppCompatActivity() {
+class FeedActivity : AppCompatActivity(), FeedViewModelContract {
 
-    private var access_token : String? = null
+
+    private var access_token: String? = null
+    private var feedViewModel: FeedViewModel? = null
+    //    private var mActivityFeedBinding : ActivityFeedBinding? = null
+    private var feedAdapter: FeedAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
+        Places.initialize(this@FeedActivity,"AIzaSyCtggjLY1pcqklWJHhLnPcc87wQV8-GyJI")
+        access_token = intent?.extras?.getString("access_token")
+        feedViewModel= ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
-        access_token =intent?.extras?.getString("access_token")
+        setupListFeed()
 
-        Toast.makeText(this@FeedActivity,"$access_token",Toast.LENGTH_SHORT).show()
-        loadJSON()
+        feedViewModel?.listDataFeed?.observe(this, Observer {
+            feedAdapter?.addAll(it)
+        })
+//        feedViewModel?.loadData()?.observe(this, Observer {
+//            feedAdapter?.addAll(it)
+//        })
+        if (feedViewModel?.listDataFeed?.value.isNullOrEmpty())
+            feedViewModel?.loadData(access_token)
 
     }
 
+    private fun setupListFeed() {
+        feedAdapter = FeedAdapter(this@FeedActivity)
+        rvFeed.adapter = feedAdapter
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvFeed.layoutManager = LinearLayoutManager(this)
+        else rvFeed.layoutManager = GridLayoutManager(this,2)
+    }
 
-    fun loadJSON()
-    {
+//    private fun initBinding() {
+//        mActivityFeedBinding = DataBindingUtil.setContentView(this,R.layout.activity_feed)
+//        feedViewModel = FeedViewModel(this@FeedActivity,access_token)
+//        mActivityFeedBinding.apply {
+//            this?.lifecycleOwner = this@FeedActivity
+//            this?.feedViewModel = feedViewModel
+//        }
+//    }
+
+
+    fun loadJSON() {
         try {
 
             val service: Service? = Client.getClient()?.create(Service::class.java)
 
-            val call : Call<Feed>? = service?.getApiFeed("Bearer $access_token","1","25")
+            val call: Call<Feed>? = service?.getApiFeed("Bearer $access_token", "1", "25")
 
             call?.run {
                 enqueue(object : Callback<Feed> {
@@ -51,14 +82,13 @@ class FeedActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(call: Call<Feed>, response: Response<Feed>) {
-                        if (response.body()?.status != true)
-                        {
-                            Toast.makeText(this@FeedActivity,"faild",Toast.LENGTH_SHORT).show()
+                        if (response.body()?.status != true) {
+                            Toast.makeText(this@FeedActivity, "faild", Toast.LENGTH_SHORT).show()
                             return
                         }
-                        val dataFeed : List<DataFeed>? = response.body()?.data
-                        Log.e("id","${dataFeed?.get(0)?.id}")
-                        Log.e("message","${response.body()?.status}")
+                        val dataFeed: List<DataFeed>? = response.body()?.data
+                        Log.e("id", "${dataFeed?.get(0)?.id}")
+                        Log.e("message", "${response.body()?.status}")
 
                     }
                 })
@@ -67,6 +97,10 @@ class FeedActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.d("Error ", e.message)
         }
+    }
+
+    override fun loadDataSuccess(listFeed: List<DataFeed>?) {
+        feedAdapter?.addAll(listFeed ?: return)
     }
 
 }

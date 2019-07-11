@@ -11,7 +11,7 @@
         <clip-path android:pathData="m5.3333,18.6667l21.3333,-0l0,-6.6667L5.3333,12Z M 0,0"/>
         <path
             android:pathData="M33.3333,6.6667L33.3333,25.3333L-1.3333,25.3333l0,-18.6667z"
-            android:fillColor="#717171"
+            android:fillColor="#04040f"
             android:strokeColor="#00000000"
             android:fillType="nonZero"
             android:fillAlpha="1"/>

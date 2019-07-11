@@ -23,8 +23,6 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     private var fcm_token: String? = null
-    var username: String? = null
-    var password: String? = null
     private var loginViewModel: LoginViewModel? = null
     private var mActivityMainBinding: ActivityMainBinding? = null
 
@@ -35,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
-                    Log.w("faild", "getInstanceId failed", task.exception)
+                    Log.w("failed", "getInstanceId failed", task.exception)
                     return@OnCompleteListener
                 }
                 fcm_token = task.result?.token
-                Log.e("fcm_token", fcm_token)
+//                Log.e("fcm_token", fcm_token)
                 initBinding()
             })
 
@@ -59,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             this?.lifecycleOwner = this@MainActivity
             this?.loginViewModel = loginViewModel
         }
+
 //        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 //        loginViewModel?.edtUsename?.value = "dangkhai98nd@gmail.com"
 //        DataBindingUtil.setContentView<ActivityMainBinding>(
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             call?.run {
                 enqueue(object : Callback<User> {
                     override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.e("faild ", "${edtUsername.text}")
+                        Log.e("failed ", "${edtUsername.text}")
                         loadJSON()
                     }
 

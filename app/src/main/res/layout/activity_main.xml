@@ -27,13 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <TextView android:layout_width="match_parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent"
-                  android:id="@+id/tvUsername"
-                  android:text="@{loginViewModel.ldUsename}"
-                  app:layout_constraintBottom_toTopOf="@id/edtUsername"
-                  android:layout_height="wrap_content"/>
+
         <EditText android:layout_width="300dp"
                   app:layout_constraintStart_toStartOf="@id/edtPassword"
                   app:layout_constraintBottom_toTopOf="@id/edtPassword"
