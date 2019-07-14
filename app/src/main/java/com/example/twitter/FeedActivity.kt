@@ -7,16 +7,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.twitter.adapter.FeedAdapter
 import com.example.twitter.api.Client
 import com.example.twitter.api.Service
 import com.example.twitter.model.DataFeed
 import com.example.twitter.model.Feed
+import com.example.twitter.utils.EndlessRecyclerViewScrollListener
 import com.example.twitter.viewmodel.FeedViewModel
 import com.example.twitter.viewmodel.FeedViewModelContract
-import com.google.android.libraries.places.api.Places
 import kotlinx.android.synthetic.main.content_feed.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,15 +31,22 @@ class FeedActivity : AppCompatActivity(), FeedViewModelContract {
     private var feedViewModel: FeedViewModel? = null
     //    private var mActivityFeedBinding : ActivityFeedBinding? = null
     private var feedAdapter: FeedAdapter? = null
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
+    private var isLoading = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
-        Places.initialize(this@FeedActivity,"AIzaSyCtggjLY1pcqklWJHhLnPcc87wQV8-GyJI")
+//        Places.initialize(this@FeedActivity,"AIzaSyCtggjLY1pcqklWJHhLnPcc87wQV8-GyJI")
         access_token = intent?.extras?.getString("access_token")
-        feedViewModel= ViewModelProviders.of(this).get(FeedViewModel::class.java)
+        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
         setupListFeed()
+
+        val layoutManager = rvFeed.layoutManager
+
+
 
         feedViewModel?.listDataFeed?.observe(this, Observer {
             feedAdapter?.addAll(it)
@@ -46,16 +55,32 @@ class FeedActivity : AppCompatActivity(), FeedViewModelContract {
 //            feedAdapter?.addAll(it)
 //        })
         if (feedViewModel?.listDataFeed?.value.isNullOrEmpty())
-            feedViewModel?.loadData(access_token)
+            isLoading = feedViewModel?.loadData(access_token) ?: false
+
+
+        scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager!!) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                Log.e("end recycleview", "true")
+                if (!(isLoading)) {
+                    isLoading = true
+
+                    isLoading = feedViewModel?.loadData(access_token) ?: false
+
+                }
+
+            }
+        }
+        rvFeed.addOnScrollListener(scrollListener as RecyclerView.OnScrollListener)
 
     }
 
     private fun setupListFeed() {
         feedAdapter = FeedAdapter(this@FeedActivity)
+        rvFeed.itemAnimator = DefaultItemAnimator()
         rvFeed.adapter = feedAdapter
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             rvFeed.layoutManager = LinearLayoutManager(this)
-        else rvFeed.layoutManager = GridLayoutManager(this,2)
+        else rvFeed.layoutManager = GridLayoutManager(this, 2)
     }
 
 //    private fun initBinding() {

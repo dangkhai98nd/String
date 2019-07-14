@@ -21,31 +21,38 @@ import retrofit2.Response
 class FeedViewModel : ViewModel() {
     //    private var feedViewModelContract : FeedViewModelContract = mContext as FeedViewModelContract
     var listDataFeed: MutableLiveData<List<DataFeed>> = MutableLiveData()
-
-    fun loadData(access_token : String?) : LiveData<List<DataFeed>> {
+    var page = 1
+    var totalPages = 1
+    val currentPerPage = 10
+    fun loadData(access_token : String?) : Boolean {
+        Log.e("start load page","$page")
+        if (page > totalPages) return true
         try {
 
             val service: Service? = Client.getClient()?.create(Service::class.java)
 
-            val call: Call<Feed>? = service?.getApiFeed("Bearer $access_token", "1", "25")
+            val call: Call<Feed>? = service?.getApiFeed("Bearer $access_token", page.toString(), currentPerPage.toString())
 
             call?.run {
                 enqueue(object : Callback<Feed> {
                     override fun onFailure(call: Call<Feed>, t: Throwable) {
                         Log.e("load data","failed")
+
                     }
 
                     override fun onResponse(call: Call<Feed>, response: Response<Feed>) {
                         if (response.body()?.status != true) {
 //                            Toast.makeText(mApplication, "failed", Toast.LENGTH_SHORT).show()
+
                             return
                         }
                         listDataFeed.value = response.body()?.data ?: listOf()
-
+                        totalPages = response.body()?.metadata?.total_pages ?:
 //                        Log.e("id", "${listDataFeed.value.get(0).id}")
                         Log.e("message", "${response.body()?.status}")
 //                        Toast.makeText(mContext, "${response.body()?.status}", Toast.LENGTH_SHORT).show()
-
+                        Log.e("load done page" ,"$page")
+                        page += 1
 //                        feedViewModelContract.loadDataSuccess(listDataFeed)
 
                     }
@@ -55,7 +62,7 @@ class FeedViewModel : ViewModel() {
         } catch (e: Exception) {
             Log.d("Error ", e.message)
         }
-        return listDataFeed
+        return false
     }
 
 }

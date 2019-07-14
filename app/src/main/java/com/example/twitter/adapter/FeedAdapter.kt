@@ -46,7 +46,6 @@ class FeedAdapter(
             0 -> ItemItineraryViewHolder(
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_itinerary, parent, false)
             )
-
             1 -> ItemPostViewHolder(
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_post, parent, false)
             )
@@ -200,7 +199,7 @@ class FeedAdapter(
 //            Log.e("poi", "${itemPoiBinding.poiViewModel?.dataFeed?.title}")
             itemPoiBinding.executePendingBindings()
 //            getPhoto(dataFeed.placeID ?: return)
-            loadImageFromPlaceid(dataFeed)
+//            loadImageFromPlaceid(dataFeed)
         }
     }
 
@@ -219,9 +218,9 @@ class FeedAdapter(
         private val itemItineraryBinding: ItemItineraryBinding
     ) : RecyclerView.ViewHolder(itemItineraryBinding.root) {
         fun bind(dataFeed: DataFeed) {
-            if (itemItineraryBinding.itemItinerary == null)
-                itemItineraryBinding.itemItinerary = ItineraryViewModel(dataFeed)
-            else itemItineraryBinding.itemItinerary?.dataFeed = dataFeed
+            if (itemItineraryBinding.itineraryViewModel == null)
+                itemItineraryBinding.itineraryViewModel = ItineraryViewModel(dataFeed)
+            else itemItineraryBinding.itineraryViewModel?.dataFeed = dataFeed
             itemItineraryBinding.executePendingBindings()
         }
     }
