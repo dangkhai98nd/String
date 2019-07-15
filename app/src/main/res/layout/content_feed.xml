@@ -20,14 +20,14 @@
 
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:text="Feed"
                 android:fontFamily="@font/noirprosemibolditalic"
                 android:textColor="@color/colorViolet"
                 android:textSize="16pt"
                 android:gravity="center"
+                android:padding="4dp"
                 app:layout_constraintWidth_percent="0.7"
-                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" android:id="@+id/textView"/>
