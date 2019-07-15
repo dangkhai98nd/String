@@ -5,8 +5,9 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="colorAccent">@color/colorViolet</item>
+        <item name="android:fontFamily">@font/noirprolight</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <!--<item name="android:ambientShadowAlpha">1</item>-->
         <!--<item name="android:spotShadowAlpha">1</item>-->
 

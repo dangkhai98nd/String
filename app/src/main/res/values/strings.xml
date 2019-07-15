@@ -2,4 +2,6 @@
     <string name="app_name">Twitter</string>
     <string name="msg_token_fmt">token</string>
     <string name="title_activity_feed">FeedActivity</string>
+    <string name="more">More</string>
+    <string name="less">Less</string>
 </resources>

@@ -22,6 +22,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="Feed"
+                android:fontFamily="@font/noirprosemibolditalic"
+                android:textColor="@color/colorViolet"
                 android:textSize="16pt"
                 android:gravity="center"
                 app:layout_constraintWidth_percent="0.7"
@@ -42,6 +44,8 @@
                 app:layout_constraintStart_toStartOf="parent">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

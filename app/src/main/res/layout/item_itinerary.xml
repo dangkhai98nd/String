@@ -33,6 +33,8 @@
                 <TextView
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:fontFamily="@font/noirprosemibold"
+                        android:textSize="12pt"
                         android:layout_width="0dp"
                         android:id="@+id/title"
                         app:layout_constraintWidth_percent="0.5"
@@ -63,14 +65,17 @@
                                 android:src="@drawable/ic_stringline"
                                 android:id="@+id/ivString"
                                 android:scaleType="fitXY"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"/>
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"/>
                         <TextView
                                 android:layout_margin="5dp"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/ivString"
                                 android:text="String"
+                                android:fontFamily="@font/noirprobold"
+                                android:textColor="@color/colorViolet"
+                                android:textSize="6pt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -82,10 +87,11 @@
             <androidx.recyclerview.widget.RecyclerView
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_1"
+                    android:visibility="@{itineraryViewModel.dataFeed.itineraries == null ? View.GONE : View.VISIBLE}"
                     android:id="@+id/rvItinerary"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/height_image">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -99,6 +105,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clUser"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_width="wrap_content"
@@ -106,7 +113,7 @@
                     <ImageView
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:imageUrl="@{itineraryViewModel.dataFeed.user.profilePhoto}"
+                            app:profilePhotoUrl="@{itineraryViewModel.dataFeed.user.profilePhoto}"
                             android:id="@+id/ivProfilePhotoUser"
                             android:layout_width="40dp"
                             android:layout_height="40dp"/>
@@ -116,8 +123,15 @@
                             app:layout_constraintTop_toTopOf="@id/ivProfilePhotoUser"
                             app:layout_constraintBottom_toBottomOf="@id/ivProfilePhotoUser"
                             android:id="@+id/tvUsername"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:fontFamily="@font/noirprobold"
+                            android:textSize="6pt"
+                            android:gravity="center"
+                            android:maxLines="2"
                             android:text="@{itineraryViewModel.dataFeed.user.username}"
                             android:layout_width="wrap_content"
+                            android:maxWidth="200dp"
                             android:layout_height="wrap_content"/>
 
                     <ImageView
@@ -127,12 +141,13 @@
                             android:src="@drawable/ic_sml"
                             android:visibility="@{itineraryViewModel.dataFeed.user.type == itineraryViewModel.strNomal ? View.GONE : View.VISIBLE}"
                             android:id="@+id/ic_sml"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_width="@dimen/height_width_star"
+                            android:layout_height="@dimen/height_width_star"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clStrung"
+                        android:layout_marginTop="8dp"
                         android:visibility="@{itineraryViewModel.dataFeed.strungFrom != null ? View.VISIBLE : View.GONE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/clUser"
@@ -148,13 +163,21 @@
                             android:layout_height="wrap_content"/>
                     <ImageView
                             android:id="@+id/ivProfilePhotoStrung"
+                            android:layout_marginLeft="8dp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ivRetweet"
-                            app:imageUrl="@{itineraryViewModel.dataFeed.strungFrom.profilePhoto}"
+                            app:profilePhotoUrl="@{itineraryViewModel.dataFeed.strungFrom.profilePhoto}"
                             android:layout_width="40dp"
                             android:layout_height="40dp"/>
                     <TextView
                             android:id="@+id/tvStrungname"
+                            android:fontFamily="@font/noirprobold"
+                            android:textColor="@color/colorGrey"
+                            android:textSize="6pt"
+                            android:maxWidth="200dp"
+                            android:maxLines="2"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
                             app:layout_constraintStart_toEndOf="@id/ivProfilePhotoStrung"
                             app:layout_constraintTop_toTopOf="@id/ivProfilePhotoStrung"
                             app:layout_constraintBottom_toBottomOf="@id/ivProfilePhotoStrung"
@@ -163,10 +186,17 @@
                             android:layout_height="wrap_content"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
+                <com.borjabravo.readmoretextview.ReadMoreTextView
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/clStrung"
                         android:id="@+id/description"
+                        android:fontFamily="@font/noirproheavyitalic"
+                        app:colorClickableText="@color/colorViolet"
+                        app:trimExpandedText="@string/less"
+                        app:trimCollapsedText="@string/more"
+                        app:showTrimExpandedText="true"
+                        android:textSize="6pt"
+                        android:layout_marginTop="8dp"
                         android:text="@{itineraryViewModel.dataFeed.description}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
@@ -188,6 +218,8 @@
                         android:visibility="@{itineraryViewModel.dataFeed.likeCounter == 0 ? View.GONE : View.VISIBLE}"
                         android:id="@+id/count_heart"
                         android:layout_width="50dp"
+                        android:fontFamily="@font/noirprobold"
+                        android:textSize="6pt"
                         android:layout_height="wrap_content"/>
 
                 <ImageView
@@ -208,6 +240,8 @@
                         android:text="@{itineraryViewModel.dataFeed.commentCounter.toString()}"
                         android:visibility="@{itineraryViewModel.dataFeed.commentCounter == 0 ? View.GONE : View.VISIBLE}"
                         android:layout_width="50dp"
+                        android:fontFamily="@font/noirprobold"
+                        android:textSize="6pt"
                         android:id="@+id/count_comment"
                         android:layout_height="wrap_content"/>
 

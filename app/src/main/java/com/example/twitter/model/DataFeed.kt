@@ -11,7 +11,7 @@ class DataFeed (
     var address : String? = null,
     var lat : Float? = null,
     var long : Float? = null,
-//    var workingHours : ????
+    var isPrivate : Boolean? = null,
     var websiteUrl : String? = null,
     var placeID : String? = null,
     var created_at : String? = null,
@@ -21,5 +21,6 @@ class DataFeed (
     var isLiked : Boolean? = null,
     var tags : List<Any>? = null,       // ????
     var strungFrom : DataUser? = null,
-    var description : String? = null
+    var description : String? = null,
+    var itineraries : List<Itinerary>? = null
 )

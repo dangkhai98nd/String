@@ -1,8 +1,10 @@
 package com.example.twitter.viewmodel
 
-import androidx.databinding.BaseObservable
+import androidx.lifecycle.ViewModel
+import com.example.twitter.adapter.ItineraryAdapter
 import com.example.twitter.model.DataFeed
 
-class ItineraryViewModel(var dataFeed: DataFeed) : BaseObservable() {
-    var strNomal : String = "nomal"
+class ItineraryViewModel(var dataFeed: DataFeed) : ViewModel() {
+    var strNomal: String = "nomal"
+
 }

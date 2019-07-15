@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.twitter.R
@@ -129,7 +131,7 @@ class FeedAdapter(
                 }.addOnFailureListener { exception ->
                     if (exception is ApiException) {
                         val apiException = exception as ApiException
-                        val statusCode = apiException.statusCode
+                        apiException.statusCode
                         // Handle error with given status code.
                         Log.e("error", "Place not found: $exception")
 //                        abc(placesClient, photoRequest)
@@ -144,7 +146,7 @@ class FeedAdapter(
 
         fun abc(placesClient: PlacesClient, photoRequest: FetchPhotoRequest) {
             placesClient.fetchPhoto(photoRequest).addOnSuccessListener { fetchPhotoResponse ->
-                var bitmap = fetchPhotoResponse.bitmap
+                val bitmap = fetchPhotoResponse.bitmap
                 image.setImageBitmap(bitmap)
 //                    Glide.with(mView)
 ////                        .asBitmap()
@@ -160,7 +162,7 @@ class FeedAdapter(
             }.addOnFailureListener { exception ->
                 if (exception is ApiException) {
                     val apiException = exception as ApiException
-                    val statusCode = apiException.statusCode
+                    apiException.statusCode
 
                     Log.e("error", "Place not found: $exception")
 //                    abc(placesClient, photoRequest)
@@ -217,11 +219,21 @@ class FeedAdapter(
     class ItemItineraryViewHolder(
         private val itemItineraryBinding: ItemItineraryBinding
     ) : RecyclerView.ViewHolder(itemItineraryBinding.root) {
+        private val view : View = itemItineraryBinding.root
+        private val rvItinerary = view.findViewById<RecyclerView>(R.id.rvItinerary)
+        private var itineraryAdapter : ItineraryAdapter? = null
+        init {
+            itineraryAdapter = ItineraryAdapter()
+            rvItinerary.itemAnimator = DefaultItemAnimator()
+            rvItinerary.layoutManager = LinearLayoutManager(view.context,LinearLayoutManager.HORIZONTAL,false)
+            rvItinerary.adapter = itineraryAdapter
+        }
         fun bind(dataFeed: DataFeed) {
             if (itemItineraryBinding.itineraryViewModel == null)
                 itemItineraryBinding.itineraryViewModel = ItineraryViewModel(dataFeed)
             else itemItineraryBinding.itineraryViewModel?.dataFeed = dataFeed
             itemItineraryBinding.executePendingBindings()
+            itineraryAdapter?.addAll(dataFeed.itineraries)
         }
     }
 }

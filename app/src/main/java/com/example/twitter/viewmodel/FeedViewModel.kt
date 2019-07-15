@@ -36,8 +36,8 @@ class FeedViewModel : ViewModel() {
             call?.run {
                 enqueue(object : Callback<Feed> {
                     override fun onFailure(call: Call<Feed>, t: Throwable) {
-                        Log.e("load data","failed")
-
+                        Log.e("load data page","$page failed")
+//                        loadData(access_token)
                     }
 
                     override fun onResponse(call: Call<Feed>, response: Response<Feed>) {

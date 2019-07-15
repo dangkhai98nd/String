@@ -1,8 +1,8 @@
 package com.example.twitter.viewmodel
 
-import androidx.databinding.BaseObservable
+import androidx.lifecycle.ViewModel
 import com.example.twitter.model.DataFeed
 
-class PostViewModel (var dataFeed: DataFeed) : BaseObservable() {
-    var strNomal : String = "nomal"
+class PostViewModel(var dataFeed: DataFeed) : ViewModel() {
+    var strNomal: String = "nomal"
 }

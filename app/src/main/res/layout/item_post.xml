@@ -28,31 +28,43 @@
                 <ImageView
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:imageUrl="@{postViewModel.dataFeed.user.profilePhoto}"
+                        app:profilePhotoUrl="@{postViewModel.dataFeed.user.profilePhoto}"
                         android:id="@+id/ivProfilePhotoUser"
                         android:layout_width="40dp"
                         android:layout_height="40dp"/>
 
                 <TextView
                         app:layout_constraintTop_toTopOf="@id/ivProfilePhotoUser"
+                        app:layout_constraintBottom_toBottomOf="@id/ivProfilePhotoUser"
                         app:layout_constraintStart_toEndOf="@id/ivProfilePhotoUser"
                         android:layout_width="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:fontFamily="@font/noirprobold"
+                        android:textSize="6pt"
+                        android:gravity="center"
+                        android:maxWidth="200dp"
+                        android:maxLines="2"
                         android:text="@{postViewModel.dataFeed.user.username}"
                         android:id="@+id/tvUsername"
                         android:layout_height="wrap_content"/>
                 <ImageView
                         app:layout_constraintStart_toEndOf="@+id/tvUsername"
                         app:layout_constraintTop_toTopOf="@id/tvUsername"
+                        app:layout_constraintBottom_toBottomOf="@id/tvUsername"
                         android:src="@drawable/ic_sml"
                         android:visibility="@{postViewModel.dataFeed.user.type == postViewModel.strNomal ? View.GONE : View.VISIBLE}"
                         android:id="@+id/ic_sml"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="@dimen/height_width_star"
+                        android:layout_height="@dimen/height_width_star"/>
                 <TextView
                         app:layout_constraintTop_toBottomOf="@id/tvUsername"
                         app:layout_constraintStart_toStartOf="@id/tvUsername"
                         android:layout_marginTop="10dp"
+                        android:paddingLeft="8dp"
                         android:id="@+id/tvTime"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="6pt"
                         android:text="@{postViewModel.dataFeed.created_at}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -81,14 +93,17 @@
                                 android:src="@drawable/ic_savefilledviolet"
                                 android:id="@+id/ivString"
                                 android:scaleType="fitXY"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"/>
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"/>
                         <TextView
                                 android:layout_margin="5dp"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/ivString"
                                 android:text="Save"
+                                android:fontFamily="@font/noirprobold"
+                                android:textColor="@color/colorViolet"
+                                android:textSize="6pt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,9 +119,14 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"/>-->
 
-            <TextView
+            <com.borjabravo.readmoretextview.ReadMoreTextView
                     android:id="@+id/tvDescription"
                     android:text="@{postViewModel.dataFeed.description}"
+                    android:fontFamily="@font/noirproheavyitalic"
+                    app:colorClickableText="@color/colorViolet"
+                    app:trimExpandedText="@string/less"
+                    app:trimCollapsedText="@string/more"
+                    app:showTrimExpandedText="true"
                     app:layout_constraintTop_toBottomOf="@id/cl_1"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="match_parent"
@@ -136,6 +156,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="match_parent"
                         android:scaleType="fitXY"
+                        app:photoUrl="@{postViewModel.dataFeed.photos.get(0).url.medium}"
                         android:layout_height="200dp"/>
             </androidx.cardview.widget.CardView>
 
@@ -156,6 +177,8 @@
                     android:text="@{postViewModel.dataFeed.likeCounter.toString()}"
                     android:visibility="@{postViewModel.dataFeed.likeCounter == 0 ? View.GONE : View.VISIBLE}"
                     android:id="@+id/count_heart"
+                    android:fontFamily="@font/noirprobold"
+                    android:textSize="6pt"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"/>
 
@@ -177,6 +200,8 @@
                     android:text="@{postViewModel.dataFeed.commentCounter.toString()}"
                     android:visibility="@{postViewModel.dataFeed.commentCounter == 0 ? View.GONE : View.VISIBLE}"
                     android:layout_width="50dp"
+                    android:fontFamily="@font/noirprobold"
+                    android:textSize="6pt"
                     android:id="@+id/count_comment"
                     android:layout_height="wrap_content"/>
 

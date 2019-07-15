@@ -23,19 +23,33 @@ class BindingAdapterUtils {
 
         }
 
-        @BindingAdapter("imageUrl")
+        @BindingAdapter("profilePhotoUrl")
         @JvmStatic
-        fun ImageView.setImageUrl(url : String?){
+        fun ImageView.setProfilePhotoUrl(url: String?) {
             if (url != null) {
                 Glide.with(context)
                     .load(url)
                     .apply(RequestOptions.circleCropTransform())
                     .into(this)
-            }
-            else{
+            } else {
                 Glide.with(context)
                     .load(R.drawable.ic_rectangle)
                     .apply(RequestOptions.circleCropTransform())
+                    .into(this)
+            }
+        }
+
+        @BindingAdapter("photoUrl")
+        @JvmStatic
+        fun ImageView.setPhotoUrl(url : String?){
+            if (url != null){
+                Glide.with(context)
+                    .load(url)
+                    .into(this)
+            }
+            else {
+                Glide.with(context)
+                    .load(R.drawable.ic_rectangle)
                     .into(this)
             }
         }

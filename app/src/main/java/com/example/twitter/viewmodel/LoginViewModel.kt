@@ -40,7 +40,7 @@ class LoginViewModel(
                 enqueue(object : Callback<User> {
                     override fun onFailure(call: Call<User>, t: Throwable) {
                         Log.e("failed ", "${ldUsename.value}")
-                        onClickLogin()
+//                        onClickLogin()
                     }
 
                     override fun onResponse(call: Call<User>, response: Response<User>) {

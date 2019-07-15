@@ -78,9 +78,9 @@ class FeedActivity : AppCompatActivity(), FeedViewModelContract {
         feedAdapter = FeedAdapter(this@FeedActivity)
         rvFeed.itemAnimator = DefaultItemAnimator()
         rvFeed.adapter = feedAdapter
-        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+//        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             rvFeed.layoutManager = LinearLayoutManager(this)
-        else rvFeed.layoutManager = GridLayoutManager(this, 2)
+//        else rvFeed.layoutManager = GridLayoutManager(this, 2)
     }
 
 //    private fun initBinding() {
